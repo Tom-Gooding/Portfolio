@@ -8,7 +8,10 @@
     - [Bipolar Montage 1: Setup](#bipolar-montage-1-setup)
     - [**Phase Reversal.**](#phase-reversal)
     - [Referential Montages](#referential-montages)
-    - [Page speed (EEG display settings)](#page-speed-eeg-display-settings)
+    - [Page speed (EEG display settings).](#page-speed-eeg-display-settings)
+    - [Filters.](#filters)
+    - [Sensitivity.](#sensitivity)
+- [Putting it all Together:](#putting-it-all-together)
 - [Section 1- Spectrogram Analysis 101 (Overview)](#section-1--spectrogram-analysis-101-overview)
   - [Spectrogram](#spectrogram)
     - [Sleep Staging](#sleep-staging)
@@ -113,15 +116,66 @@ Unlike bipolar momntages, there is no phase reversal in a referential montage. E
 
 ![referential montage display](Spectrogram_Analysis_Images/referential_montage_eeg_display.png)
 
-### Page speed (EEG display settings)
+### Page speed (EEG display settings).
 Formation of the EEG tracing lines is only one part of EEG. REading speed determines how many seconds of the study are displayed at one time. The standard adult reading speed is 30mm/sec and the standard neonatal speed is 15 mm/sec. 
 
 The higher the reading speed, the fewer seconds are displayed on the screen at one time, and the more "stretched out" the EEG waves appear. When EEG is/was recorded by ink and paper on a continuous stream of paper, page speed would dictate how stretched out the EEG waves appeared (see image below). 
 
 ![page speed](Spectrogram_Analysis_Images/page_speed_examples.png)
 
-In practical terms, syncing up the **Timescale** of both the Sleep Profiler Study Editor Tool, and the EDFBrowser (used for viewing raw EEG data), will allow you to identify what EEG.edf file channels correspond to what Sleep Profile Study Editor Tool channels. This is critical for ensuring that data channels are properly identify in  Python or whatever program you will be using to perform EEG macro- and micro-structural analysis. 30 seconds per page 
+In practical terms, syncing up the **Timescale** of both the Sleep Profiler Study Editor Tool, and the EDFBrowser (used for viewing raw EEG data), will allow you to identify what EEG.edf file channels correspond to what Sleep Profile Study Editor Tool channels. This is critical for ensuring that data channels are properly identify in  Python or whatever program you will be using to perform EEG macro- and micro-structural analysis. 30 seconds per page. 
 
+### Filters.
+Filters are another foundational concept in EEG. Every tracing you read has already been filtered, in that the waveforms on the screen are a processed rather than pure representation of the underlying electrical activity. Filters can improve readability by attenuating distracting or irrelevant frequencies at the extremes of the spectrum. However, relevant cerebral activity can bre diminished or distorted in the process of filtering. 
+
+There are three main filter types: low frequency (high pass), high frequency (low pass), and notch. 
+
+**Low frequency filters** (LFF) filter out frequencies below a certain threshold while allowing higher frequencies through, hence "high pass." The standard LFF is 0.5–1.0 Hz as most activity below that level is artifact and can make the EEG very hard to read. 
+
+Choosing LFF that is too low will allow a lot of unwanted lf sweat [sic] and other artifact through, while choosing one that is too high may hide important delta activity. 
+
+**High frequency filters** (HFF) filter out frequencies above a certain threshold; they are also called low pass filters for similar reasons to how high pass filters earned their nickname. The standard HFF is 70 Hz, and choosing a HFF that is too low will filter out possibly important beta activity, while choosing one that is too high may lead to excessive myogenic (muscle) artifact that obscures underlying slower rhythms. 
+
+ **Notch filters** selectively remove 60 Hz actiity that arises from electrical interference such as wires and equipment (50 Hz for Europe). Because 60/50 Hz sits well above the average range of cerebral activity reliably captured via scalp EEG, notching out this frequency doesn't usually affect interpretation, although it can subtly distort sharp transients. 
+
+ ### Sensitivity. 
+ Sensitivity determines how tall waveforms appear on screen by setting the voltage needed to produce a given height. It is measured in microvolts per millimeter (μV/mm) and, somewhat counterintuitively, the higher the number the lower the sensitivity. 
+
+ Like page speed, this is a vestige of the days of Paper-based EEG. A sensitivity of 5 μV/mm means it takes 5 microvolts to move the pen 1 mm, while a sensitivity of 10 μV/mm means it takes 10 microvolts to move the same pen 1 millimeter. The lower the number, the more sensitive it is to electrical signal. 
+ 
+ The standard reading sensitivity is 7 μV/mm. **In practical terms, higher sensitivity values lead to smaller appearing waveforms.** Raising the sensitivity can help one interpret discharges of very high amplitude, just remember to reset the sensitivity when moving on from said discharges.
+
+
+# Putting it all Together: 
+
+**In practical terms:** Learning about the 'standard' EEG settings such as page speed, time scales, montage setup characteristics, etc. is what ultimately allowed me to discern what the Sleep Profiler channel equivalents were in the raw EDF files, when analyzing raw EEG data with 26 unidentified data channels to choose from. And this was off an at-home frontal EEG device vs. a cap-based EEG (what the reference source materials were originally purposed for.)
+
+Learning the settings and basics allows you to properly and accurately visually inspect timestamped EEG data in Sleep Profiler and verify which channels are what in the raw data (via Python, R, MATLAB, etc.)
+
+See the following photos for demonstrations of matching timestamped pairs of Sleep Profiler and raw EEG.edf data (via the free, open-source [EDFBrowser package](https://www.teuniz.net/edfbrowser/).)
+
+
+
+
+**Instructions:**
+1. Open the EEG.edf file in Sleep Profiler's Study Editor Tool.
+2. Open the EEG.edf file in EDFBrowser. Select/add the 4 EEG channels to the signal composition (derivation). Click 'Add Signals' for the channel display to show up. **Note:** You can only view multiple channels that are the same sample frequency (e.g., only 256 Hz or 10 Hz channels at once.)
+3. **Adjust display settings:.** Match timescale, and amplitude settings for the EDFBrowser. **Alway start matching based on the Sleep Profiler Study Editor Tool's display settings** (which are much less customizabile).
+   - Standard EEG epochs are 30-s in length as a reference. For initial timescales, I would scan the Sleep Profiler Study Editor Tool in **30 to 120 seconds per screen display** and find a distinct set of features in the Study Editor tools (e.g., unique shape/patterns of artifact of signal in the fEMG, R/LEOG, and/or EEG channels.)
+   - After finding a distinct EEG signal, adjust timescale to 30-seconds in SP study editor tool. The end results will me much more apparent in the 30-s timescale (again, the AASM EEG standard.)
+   - Match EDFBrowser to the timestamp shown for the EMT timestamp in the SP Study Editor Tool. **EST** is the timestamp at the left-most end of the SP study editor tool display; **EMT** is the timestamp of your cursor. The EDFBrowser timestamp should be within ~10 seconds of the SP study editor tool's time.
+4. Check/match the direction of the y-axis on both EDFBrowser and SP Study Editor tool. The standard EEG configuration is for (-) charge to be the postive/upward direction on a y-axis and (+) to be the downward direction on a y-axis. 
+  - Sleep Profiler has this reversed without an option to correct. EDFBrowser channels will likely need to be inverted (access via Signals -> Properties or by clicking the display name of a channel).
+  - Adjust EDFBrowser amplitude settings to match Sleep Profiler. starting around +/- 75 to 100 amplitude is a good starting place for R/LEOG and EEG channels. 
+  - Match the amplitude for each channel in EDFBrowser. 
+5. 
+
+
+- 
+- Set both timescales to same rate
+  - EDFBrowser(EDFB): 
+  - SleepProfiler(SP):
+- Visually inspect the waveform characteristics
 
 
 
