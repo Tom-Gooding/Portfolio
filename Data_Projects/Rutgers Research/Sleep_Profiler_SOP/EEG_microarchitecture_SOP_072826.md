@@ -70,7 +70,7 @@ From SleepProfiler SOP, export the most recent, processed EEG.edf file of a stud
 
 **Note:** [EDF](https://www.edfplus.info/) (European Data Format) is the de-facto standard format for EEG and PSG recordings in commercial equipment and multicenter research projects. 
 
-For viewing the raw data from the EEG.edf file, use an EDFBroswer (there are many on the web). The version below is a free, open-source program that the author (TG) of this SOP was able to get running on a Macbook (there are limited options available for Mac users that the time of this writing) and should give PC users little, if any, trouble downloading and accessing
+For viewing the raw data from the EEG.edf file, use an EDFBrowser (there are many on the web). The version below is a free, open-source program that the author (TG) of this SOP was able to get running on a Macbook (there are limited options available for Mac users that the time of this writing) and should give PC users little, if any, trouble downloading and accessing
 
 Free, open-source EDF Browser: [EDF Browser Links](https://www.teuniz.net/edfbrowser/)
 
