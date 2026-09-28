@@ -74,24 +74,6 @@ For viewing the raw data from the EEG.edf file, use an EDFBrowser (there are man
 
 Free, open-source EDF Browser: [EDF Browser Links](https://www.teuniz.net/edfbrowser/)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # Actual Workflow for EEG analysis in Python
 
 ### Step 1 Exporting and viewing the csv study file. 
