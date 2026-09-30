@@ -6,7 +6,7 @@ This repository contains samples of writing including:
 
 - [Grant Writing](https://github.com/Tom-Gooding/Portfolio/tree/main/Writing%20Samples/Grant_Writing)
 - [Presentations & Public Speaking](https://github.com/Tom-Gooding/Portfolio/tree/main/Writing%20Samples/Presentations)
-- [Scientific Writing Samples (e.g., Publications](https://github.com/Tom-Gooding/Portfolio/tree/main/Writing%20Samples/Publications_Papers)
+- [Scientific Writing Samples (e.g., Publications)](https://github.com/Tom-Gooding/Portfolio/tree/main/Writing%20Samples/Publications_Papers)
 ## 2) Data Analytics Project Samples. 
 This repository contains samples of data analytics projects I've completed using a combination of Python, SQL, and Excel.
 

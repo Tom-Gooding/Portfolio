@@ -1,17 +1,17 @@
-**EEG Spectrogram Analysis**
+**EEG Spectrogram Analysis Walkthrough**
+
+Author: Tom Gooding, PhD, ATC, CSCS (2026)
 
 **Table of Contents**
 - [Introduction](#introduction)
 - [Electroencephalography (EEG) 101](#electroencephalography-eeg-101)
   - [Types of EEG electrode setups.](#types-of-eeg-electrode-setups)
-    - [**The international 10-20 system** of electrode montage uses letters and numbers to identify electrodes using letters and numbers; letters for identifying skeletal region (e.g., f for frontal), and numbers for identifying hemisphere (odds on the left, evens on the right). There are some exceptions for the naming system (see figure below). Together, the 19 electrodes are evenly spaced at 10% and 20% intervals from corners and regions of the skull, based on certain skeletal landmarks.](#the-international-10-20-system-of-electrode-montage-uses-letters-and-numbers-to-identify-electrodes-using-letters-and-numbers-letters-for-identifying-skeletal-region-eg-f-for-frontal-and-numbers-for-identifying-hemisphere-odds-on-the-left-evens-on-the-right-there-are-some-exceptions-for-the-naming-system-see-figure-below-together-the-19-electrodes-are-evenly-spaced-at-10-and-20-intervals-from-corners-and-regions-of-the-skull-based-on-certain-skeletal-landmarks)
     - [Bipolar Montage 1: Setup](#bipolar-montage-1-setup)
-    - [**Phase Reversal.**](#phase-reversal)
+    - [Phase Reversal.](#phase-reversal)
     - [Referential Montages](#referential-montages)
     - [Page speed (EEG display settings).](#page-speed-eeg-display-settings)
     - [Filters.](#filters)
     - [Sensitivity.](#sensitivity)
-- [Putting it all Together:](#putting-it-all-together)
 - [Section 1- Spectrogram Analysis 101 (Overview)](#section-1--spectrogram-analysis-101-overview)
   - [Spectrogram](#spectrogram)
     - [Sleep Staging](#sleep-staging)
@@ -28,9 +28,14 @@
     - [Hypnogram](#hypnogram)
   - [Pre-processing Data](#pre-processing-data)
   - [Spectral Analysis](#spectral-analysis)
+- [Spectral Analysis (CDSA) in EDF Browser](#spectral-analysis-cdsa-in-edf-browser)
+  - [Interpreting a Spectrogram.](#interpreting-a-spectrogram)
+    - [Sleep onset on a Spectrogram.](#sleep-onset-on-a-spectrogram)
+    - [NREM spectrogram.](#nrem-spectrogram)
   - [Sleep Spindle Analysis](#sleep-spindle-analysis)
   - [Repairing Artifact](#repairing-artifact)
     - [Sleep Profiler Study Editor Tool](#sleep-profiler-study-editor-tool)
+- [Final Thoughts.](#final-thoughts)
 - [References](#references)
 
 
@@ -62,7 +67,7 @@ In EEG, The detection of individual discharges across the scalp is done by conne
 
 Understanding the 'how' EEG captures data will ultimately help with understanding the analysis of EEG data when determining EEG channels to include for analysis. Also, a lot of the documentation referenced for this walkthrough was geared toward cap-based EEG set-ups (e.g., 10-20 or 10-10 montage electrode systems).
 
-### **The international 10-20 system** of electrode montage uses letters and numbers to identify electrodes using letters and numbers; letters for identifying skeletal region (e.g., f for frontal), and numbers for identifying hemisphere (odds on the left, evens on the right). There are some exceptions for the naming system (see figure below). Together, the 19 electrodes are evenly spaced at 10% and 20% intervals from corners and regions of the skull, based on certain skeletal landmarks.
+**The international 10-20 system** of electrode montage uses letters and numbers to identify electrodes using letters and numbers; letters for identifying skeletal region (e.g., f for frontal), and numbers for identifying hemisphere (odds on the left, evens on the right). There are some exceptions for the naming system (see figure below). Together, the 19 electrodes are evenly spaced at 10% and 20% intervals from corners and regions of the skull, based on certain skeletal landmarks.
 
 ![10-20 system](Spectrogram_Analysis_Images/10_20_eeg_system.png)
 
@@ -81,7 +86,7 @@ Because of this, **in bipolar configurations, if the first electrode in the trac
 
 ![montage phase reversal](Spectrogram_Analysis_Images/Mongtage_phase_reversal.png)
 
-### **Phase Reversal.** 
+### Phase Reversal.
 Notice in the picture above the **phase reversal** at T4 where the greatest charge occurred when a positive charge was followed by a negative charge, causing the tracings from downward (+) to upward (-). This phenomenon is why bipolar montages are so popular.
 
 With phase reversals, the middle electrode of the pair that makes the reversal is the electrode of maximum voltage (e.g, T3-T5 and T5-O1 phase reversal means that T5 has the greatest voltage of them all.)
@@ -146,18 +151,7 @@ Choosing LFF that is too low will allow a lot of unwanted lf sweat [sic] and oth
  The standard reading sensitivity is 7 μV/mm. **In practical terms, higher sensitivity values lead to smaller appearing waveforms.** Raising the sensitivity can help one interpret discharges of very high amplitude, just remember to reset the sensitivity when moving on from said discharges.
 
 
-# Putting it all Together: 
-
-**In practical terms:** Learning about the 'standard' EEG settings such as page speed, time scales, montage setup characteristics, etc. is what ultimately allowed me to discern what the Sleep Profiler channel equivalents were in the raw EDF files, when analyzing raw EEG data with 26 unidentified data channels to choose from. And this was off an at-home frontal EEG device vs. a cap-based EEG (what the reference source materials were originally purposed for.)
-
-Learning the settings and basics allows you to properly and accurately visually inspect timestamped EEG data in Sleep Profiler and verify which channels are what in the raw data (via Python, R, MATLAB, etc.)
-
-See the following photos for demonstrations of matching timestamped pairs of Sleep Profiler and raw EEG.edf data (via the free, open-source [EDFBrowser package](https://www.teuniz.net/edfbrowser/).)
-
-
-
-
-**Instructions:**
+**EDF Instructions:**
 1. Open the EEG.edf file in Sleep Profiler's Study Editor Tool.
 2. Open the EEG.edf file in EDFBrowser. Select/add the 4 EEG channels to the signal composition (derivation). Click 'Add Signals' for the channel display to show up. **Note:** You can only view multiple channels that are the same sample frequency (e.g., only 256 Hz or 10 Hz channels at once.)
 3. **Adjust display settings:.** Match timescale, and amplitude settings for the EDFBrowser. **Alway start matching based on the Sleep Profiler Study Editor Tool's display settings** (which are much less customizabile).
@@ -408,7 +402,20 @@ You need to select parameters in a principled way, based on what you'd expect to
 ## Python Dependencies
 - MNE
 - YASA (Yet Another Sleep Algorithm)
-- EDF Browser
+
+```python
+## load dependencies and packages
+## general
+import pandas as pd
+import numpy as np
+from matplotlib import pyplot as plt
+import seaborn as sns
+import os
+## sleep specific
+import mne
+import yasa
+```
+
 
 # Importing Data
 ### EEG.edf file
@@ -422,22 +429,6 @@ Sleep Profiler (csv) study file
 ## Pre-processing Data
 
 MNE artifact detection overview [documentation](https://mne.tools/dev/auto_tutorials/preprocessing/10_preprocessing_overview.html)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ## Spectral Analysis
 Yasa.plot_spectrogram() is the method, which will plot a multitaper spectrogram of the data. 
@@ -485,6 +476,78 @@ Voilá!
 
 
 
+
+# Spectral Analysis (CDSA) in EDF Browser
+
+These are the exact instructions from the EDFBrowser manual ([source](https://www.teuniz.net/edfbrowser/EDFbrowser%20manual.html))
+
+**Color Density Spectral Array:** The Color Density Spectral Array (CDSA) can be enabled by left-clicking on a signal label and selecting "CDSA", or via the Window menu.
+The default settings are usually fine for EEG. Adjust the min/max levels for optimal results.
+
+The CDSA will appear as a docked window on the bottom but can also be dragged to the top or can be put in detached mode (floating) where ever you want on your screen.
+Adjust the size of the CDSA window as you prefer.
+
+- **Segment length:**
+The length of one measurement. The number of segments in the CDSA is: recording duration / segment length.
+All segments together will present a horizontal array of segments.
+- **Block length:**
+The block length is the window size of the FFT. If the segment length is 30 seconds and the block length is 2 seconds,
+15 FFT's will be performed in one segment (if the overlap is set to 0%). The output of these 15 FFT's will be averaged.
+The block length affects the FFT resolution: FFT bin size (Hz) = samplerate / block length.
+Higher block lengths increases the FFT resolution. Lower block lengths increases the signal to noise ratio.
+- **Overlap:**
+Percentage of an FFT block that will overlap the next FFT block. Increasing this value increases the number of FFT's that will be performed
+and increases the signal to noise ratio but increases also the computational effort.
+- **Window:**
+Window is the kind of smoothing (taper) function used to prepare the data before the FFT is performed in order to lower the spectral leakage of the FFT.
+- **Min. / Max. frequency:**
+This can be set to only display the frequency range of interest. Maximum frequency is limited to half the samplingrate (nyquist frequency)
+- **Max. level:**
+Maximum level equals white. Adjust and experiment with this setting until you find the optimal setting.
+- **Min. level:**
+Minimum level equals black. Adjust and experiment with this setting until you find the optimal setting.
+- **Logarithmic:**
+If checked, it will apply the base-10 logarithm of the output of the FFT in order to increase the dynamic range.
+- **Power:**
+If checked, display the power instead of the voltage.
+- **Export data:**
+If checked, the data generated by the FFT will be exported to a text/CSV file.
+The decimal separator for the numbers in this file is a dot. The column separator is a comma.
+
+## Interpreting a Spectrogram. 
+Reference: 
+- Prerau MJ, Brown RE, Bianchi MT, Ellenbogen JM, Purdon PL. Sleep Neurophysiological Dynamics Through the Lens of Multitaper Spectral Analysis. Physiology (Bethesda). 2017;32(1):60-92. doi:10.1152/physiol.00062.2015
+
+**Notes:**
+
+### Sleep onset on a Spectrogram.
+- Initially, when a participant is quiescent [quiet, motionless] with open eyes, the spectrogram has low power across all frequencies. 
+- When the subject's eyes close, the spectrogram changes dramatically, showing strong spectral power with a central frequency ~9 Hz. 
+  - In general, this oscillation falls within the range 0f 8–12 Hz, the "alpha band."
+  - Due to the imperfect sinusoidal structure of the alpha oscillation, it is common to observe spectral power at the second alpha harmonic, which is two times the central frequency of the alpha oscillation (~18 Hz). 
+    - **Author's note:** This has something to do with complex math and wave physics (music harmonics are related). 
+
+![Sleep Onset Spectrogram](Spectrogram_Analysis_Images/Spectrogram_SleepOnset_Prerau6.png)
+
+- As sleep onset progresses, the oscillation power in the alpha bandwidth gradually decreases, fluctuates, then disappears. The disappearance of alpha aligns well with technician-scored sleep onset (N1) on a hypnogram.
+- With the loss of power in alpha, the spectrogram shows a broadband increase in low-frequency power, in particular in frequencies spanning the slow/elta (0.5–4 Hz) and theta (4-8 Hz) bands. 
+- The sudden and subsequent disappearance of the power in delta/theta and reemergence of power in alpha signififies an arousal to wakefulnes, which also aligns well with the scored hypnogram.
+- The spectrogram shows a reversal back to a high-delta/-theta state without power in alpha, indicating the participant has fallen back asleep. 
+
+### NREM spectrogram. 
+An advantage of spectral analysis is that it shows continuous, information-rich sleep data whereas hypnogram staging simplifies sleep into 30-s epochs that can only have one official sleep stage (for better or worse). 
+
+![Sleep onset to NREM spectrogram](Spectrogram_Analysis_Images/Sleep_onset_spectrogram_Prerau7.png)
+
+The most striking spectral feature of of Stage N2 sleep is the presence of increased power in the sigma band (12–15 Hz). The transient ~1-second bursts that occur in this band power are referred to as sleep spindles. 
+
+![Sleep Spindle spectrogram 8A](Spectrogram_Analysis_Images/Sleep_spindles_spectrogram_Prerau8A.png)
+
+A multi-scale visualizatin of the frontal EEG spectrogram shows spindles centered around a single frequency (A, above) in one participant, and 'high' and 'low' spindles in another participant (B, below). By using the multitaper spectrogram, it can be much easier to disambiguate distinct, overlapping spindles at different frequencies than in the time-domain traces (bottom of each figure). 
+- Sleep spindles can be separated into high frequency (13 to 16 Hz) "fast" spindles and low frequency (11 to 13 Hz) "slow" spindles. Slow spindles occur more toward the frontal brain region while fast occur more toward the centroparietal region. 
+  - **Author's note:** The official AASM manual defines the frequency range of sleep spindles as "11–16 Hz (most commonly 12–14 Hz), with a duration ≥0.5 seconds" so I believe 13 Hz as the cut-off between fast and slow spindles is appropriate. 
+
+![Sleep Spindle spectrogram 8B](Spectrogram_Analysis_Images/Sleep_spindles_spectrogram_Prerau8B.png)
 
 
 
@@ -550,6 +613,12 @@ Independent Component Analysis in MNE [documentation](https://mne.tools/dev/auto
 ### Sleep Profiler Study Editor Tool
 
 
+# Final Thoughts. 
+**In practical terms:** Learning about the 'standard' EEG settings such as page speed, time scales, montage setup characteristics, etc. is what ultimately allowed me to discern what the Sleep Profiler channel equivalents were in the raw EDF files, when analyzing raw EEG data with 26 unidentified data channels to choose from. And this was off an at-home frontal EEG device vs. a cap-based EEG (what the reference source materials were originally purposed for.)
+
+Learning the settings and basics allows you to properly and accurately visually inspect timestamped EEG data in Sleep Profiler and verify which channels are what in the raw data (via Python, R, MATLAB, etc.)
+
+See the following photos for demonstrations of matching timestamped pairs of Sleep Profiler and raw EEG.edf data (via the free, open-source [EDFBrowser package](https://www.teuniz.net/edfbrowser/).)
 
 # References
 
@@ -561,13 +630,11 @@ Independent Component Analysis in MNE [documentation](https://mne.tools/dev/auto
 
 [Video 3: Characterizing Sleep with the Multitaper Spectrogram](https://www.youtube.com/watch?v=g_MkonANaWk) ~20 minutes
 
-
-
-
-
 Dr. Michael Prerau, PhD is currently an Associate Professor at Harvard Medical School; a neuroscientist and Director of the Neurophysiological Signal Processing Core Division of Sleep and Circadian Disorders.
 
 [Prerau Lab Website](https://prerau.bwh.harvard.edu/multitaper/)
+
+- Prerau MJ, Brown RE, Bianchi MT, Ellenbogen JM, Purdon PL. Sleep Neurophysiological Dynamics Through the Lens of Multitaper Spectral Analysis. Physiology (Bethesda). 2017;32(1):60-92. doi:10.1152/physiol.00062.2015
 
 - [Prerau Lab walkthrough on multitaper spectral estimation](https://prerau.bwh.harvard.edu/multitaper/)
 

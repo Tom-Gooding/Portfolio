@@ -19,8 +19,8 @@ This walkthrough is built from a combination of references—including the AASM 
   - [Stage R (REM) criteria:](#stage-r-rem-criteria)
     - [Detecting Artifact.](#detecting-artifact)
 - [Sleep Scoring Workflow: The Actual "How to."](#sleep-scoring-workflow-the-actual-how-to)
-    - [How to assign or edit an epoch's sleep stage:](#how-to-assign-or-edit-an-epochs-sleep-stage)
-    - [Scoring the Data Workflow:](#scoring-the-data-workflow)
+  - [How to assign or edit an epoch's sleep stage:](#how-to-assign-or-edit-an-epochs-sleep-stage)
+  - [Workflow for visually scoring the data in Sleep Profiler:](#workflow-for-visually-scoring-the-data-in-sleep-profiler)
 - [Sleep Staging Examples.](#sleep-staging-examples)
 - [Helpful Resources.](#helpful-resources)
 - [References.](#references)
@@ -52,7 +52,7 @@ Here is what the study editor tool window looks like upon opening:
 Note the **'View' 'Time Scale'** and **'Comments'** tabs at the top, which can be used to modify your viewing of the data. For instance, here is the same EEG file when the time scale is changed from 30 seconds to 'Full Night:'
 
 **Tip:**
-You can quickly alternate between 30-s (one epoch) and 10-min (20 epoch) views using the 'page up/down' keys.
+You can quickly alternate between 30-s (one epoch) and 10-min (20, 30-s epochs at once) views using the 'page up/down' keys.
    - For Mac users, page up/down keys are the function (fn) key + up/down arrow, respectively.
 
 ![SP editor full scale](Sleep_Profiler_SOP_images/SP_study_editor_fullnight_scale.png)
@@ -67,19 +67,16 @@ The bottom portion of the staging area shows the entire night of sleep, with the
 
 **Other study editor tool 'features' includes:**
 
-**Signal filter/unfilter**:
+**Signal filter/unfilter**: 
+
 ![Signal filter toggle](Sleep_Profiler_SOP_images/SP_filter_toggle.png) 
 
-Both with a 0.1 Hz high-pass filter applied. When more than three seconds in a 30-s epoch staged N2 or N3 exceeds the presentation range, the sweath or breathing artifact is removed with a band-stop filter to all three channels (filter 'ON'). You can also toggle this filter on/off using the up/down arrow (hotkey) or via their icons in the lower right of the study editor tool. 
+Signal displays are defaulted to ±75 μV for LEOG/REOG and ±50 μV for EEG display, with a 0.1 Hz high-pass filter applied (blocks signals below 0.1 Hz while allowing signal above this range to pass through).
 
-**Signal defaults:** 
-
-Signal defaults are the ranges of the dashed lines on the EOG and EEG signal chanels. Default ranges are:
-- ± 75 μV for EOG
-- ±50 μV for EEG signals 
-
+When more than three seconds in a 30-s epoch staged N2 or N3 exceeds the presentation range, due to sweat-related or breathing-related artifact, a band-stop filter can be applied to all three channels (filter 'ON'). You can toggle this filter on/off using the up/down arrow (hotkey) or via their icons in the lower right of the study editor tool. 
 
 **Impedence values:** 
+
 Impedence values can be used to assist with identifying artifact (high impedence = bad). 
 ![Impedence display](Sleep_Profiler_SOP_images/Impedence_display.png)
 
@@ -133,7 +130,7 @@ Sleep Profiler also uses identified micro-arousals to stage an epoch as stage N1
 **Here are the official AASM criteria for stage N1:**
 - **Slow eye movement (SEM):** conjugate, reasonably regular, sinusoidal eye movements with an initial deflection lasting >500 ms. 
 - Low-amplitude, mixed-frequency EEG activity: low-amplitude, predominately 4–7 Hz activity. 
-- **Vertex sharp waves (V waves):** Sharply contoured waves with duration <0.5s maximal over the central region and distinguishable from the background activity. These are bilateral, phase-reversing discharges most often seen during the transition stage from N1 sleep, but can occur in either stage N1 or N2 sleep.
+- **Vertex sharp waves (V waves):** Sharply contoured waves with duration <0.5-s maximal over the central region and distinguishable from the background activity. These are bilateral, phase-reversing discharges most often seen during the transition stage from N1 sleep, but can occur in either stage N1 or N2 sleep.
 
 Here is a visual of V waves (not Sleep Profiler EEG):
 ![V wave example](Sleep_Profiler_SOP_images/vertex_wave_example.png)
@@ -146,7 +143,7 @@ Image source: [LearningEEG.com](https://www.learningeeg.com/normal-asleep)
 - In individuals who do not generate alpha rhythm, score stage N1 commencing with the earliest of ANY of the following criteria: 
   - EEG activity in range 4–7 Hz with slowing of background frequencies by ≥ 1 Hz from those of stage W
   - Vertex sharp waves
-  - slow eye movements. 
+  - slow eye movements 
 
 **Additional AASM Stage N1 Notes:**
 - Vertex waves may be present but are not required for scoring stage N1. 
@@ -158,7 +155,7 @@ Image source: [LearningEEG.com](https://www.learningeeg.com/normal-asleep)
 ## Stage N2 criteria: 
 Characterized by: 
 
-- **K-complex:** A well-delineated, negative, sharp wave immediately followed by a positive component standing out from the background EEG, with total duration ≥0.5 seconds, usually maximal in amplitude when recorded using frontal derivations. For an arousal to be associated with a K-complex, the arousal must be either concurrent with the K-complex or commence no more than 1 second after termination of the K-complex. 
+- **K-complex:** A well-delineated, negative, sharp wave immediately followed by a positive component standing out from the background EEG, with total duration ≥0.5 seconds, usually maximal in amplitude when recorded using frontal derivations. For an arousal to be associated with a K-complex, the arousal must be either concurrent with the K-complex or commence no more than one second after termination of the K-complex. 
 
 ![K complex example](Sleep_Profiler_SOP_images/Kcomplex_example.png) 
 
@@ -186,7 +183,7 @@ Per Sleep Profiler: sleep spindles require a spike in power and amplitude of bot
 - K-complexes unassociated with arousals
 - Sleep spindles. 
 
-**When to end scoring as stage N2** when ONE of the following events occurs: 
+**Stop scoring as epochs as stage N2** when ONE of the following events occurs: 
 - Transition to stage W.
 - An arousal occurs (change to Stage N1 until a K-complex unassociated with an arousal or sleep spindle).
 - A major body movement followed by slow eye movement and low-amplitude, mixed-frequency EEG without non-arousal associated K-complexes or sleep spindles (Score the epoch following the major body movement as stage N1; score the epoch as stage 2 if there are no slow eye movements; the epoch containing the body movement is scored using the criteria under heading J, see Fig 5 of AASM manual).
@@ -236,7 +233,7 @@ Sleep Profiler N3 criteria:
 - Epochs with gross EMG activity will be staged as awake despite the potential for more than half (>50%) of the epoch showing REM activity.
 
 ### Detecting Artifact.
-- Signal segments with artifact (poor connection) are colored red. If EEG has excessive artifact, Sleep Profiler will attempt to use the LEOG/REOG signals to stage. 
+- Signal segments with artifact (poor connection) are colored red. If the EEG channel has excessive artifact, Sleep Profiler will attempt to use the LEOG channel, then the REOG channel to stage an epoch.
 - When phasic activity exceeds ±100 μV with sharp edges to the waveform, this signal is detected as artifact (noise).
 
 ![Artifact Detection](Sleep_Profiler_SOP_images/SP_artifact_detection.png)
@@ -247,9 +244,10 @@ A few notes prior to reviewing EEG epoch data:
 - Sleep onset is considered the start of the first epoch scored as any stage other than W (for most individuals, this will be the first epoch of stage N1). 
 - The first epoch after "awake" is always staged as N1 unless there is the presence of a sleep spindle. 
 - If two or more stage criteria co-exist within an epoch, score the epoch as the stage comprising the largest portion of the epoch.
-- "End of study" marker can be used to mark start + end of data collection period, in case participant leaves EEG device on after awakening. (Recommended/Good Practice.)
+- "Beginning/End of study" marker can be used to mark start + end of data collection period, in case participant leaves EEG device on after awakening.
+  - **Important:** This should be completed as the very first step of pre-processing to reduce the amount of EEG data epochs included for analysis in which the participant wore the headband device while not attempting to sleep. Baesd off of sleep diary notes for sleep onset/offset.
 
-### How to assign or edit an epoch's sleep stage:
+## How to assign or edit an epoch's sleep stage:
 - Left 'double-click' to access a specific epoch (for viewing/editing that epoch).
   - Viewing one epoch at a time is particularly helping with identifying the specific epoch in which transitions from one sleep stage to the next occur. 
 - Multiple epochs can be edited/scored similtaneously by left click + dragging the cursor to select the desired epochs (see visual below). 
@@ -257,7 +255,7 @@ A few notes prior to reviewing EEG epoch data:
 
 ![Editing sleep stage visual](Sleep_Profiler_SOP_images/SP_editing_stages_visual.png)
 
-### Scoring the Data Workflow:
+## Workflow for visually scoring the data in Sleep Profiler:
 1. Locate the epoch where sleep onset was detected by the auto-staging algorithm. Then, find an epoch that is positioned several epochs after the auto-staging algorithm has identified as sleep onset and work on reviewing/editing the assigned "scored" sleep stages from here. (i.e., select an epoch ~5-10 epochs after sleep onset.) 
 2. Starting from this epoch, scroll backwards epoch-by-epoch toward sleep onset and verify that these epochs are staged correctly.
    - Modify the stages for any epochs that may have been incorrectly staged by the auto-staging algorithm (revised stages will have a 'T' placed in their staged to denote they were changed by you, the 'Technician.')
@@ -265,8 +263,7 @@ A few notes prior to reviewing EEG epoch data:
    - Pay close attention to epoch near sleep stage transitions, verify the epochs on either side of the sleep stage transitions are scored correctly. 
 4. After sleep you're confident with the transition from wake to sleep onset, proceed through the rest of the EEG data and continue this process.
 
-**Tip:**
-   - When the data is consistent upon visual inspection (example of consistent stage N3 sleep below), you can assume the auto-staging correctly scored these sleep epochs and move toward another transition point. 
+**Tip:** When the data is consistent upon visual inspection (example of consistent stage N3 sleep below), you can assume the auto-staging correctly scored these sleep epochs and move toward another transition point. 
   
 ![N3 consistent staging example](Sleep_Profiler_SOP_images/SP_consistent_N3_example.png)
 
