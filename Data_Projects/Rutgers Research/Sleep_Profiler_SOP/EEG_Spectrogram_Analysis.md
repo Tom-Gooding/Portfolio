@@ -12,11 +12,11 @@ Author: Tom Gooding, PhD, ATC, CSCS (2026)
     - [Page speed (EEG display settings).](#page-speed-eeg-display-settings)
     - [Filters.](#filters)
     - [Sensitivity.](#sensitivity)
-- [Section 1- Spectrogram Analysis 101 (Overview)](#section-1--spectrogram-analysis-101-overview)
+- [Spectrogram Analysis 101 (Overview)](#spectrogram-analysis-101-overview)
   - [Spectrogram](#spectrogram)
     - [Sleep Staging](#sleep-staging)
 - [Wave Properties](#wave-properties)
-- [Section XX: Periodogram and Fourier Analysis](#section-xx-periodogram-and-fourier-analysis)
+- [Periodogram and Fourier Analysis](#periodogram-and-fourier-analysis)
   - [Periodogram Bias](#periodogram-bias)
   - [Improving Bias](#improving-bias)
   - [Multi-taper Spectral Analysis](#multi-taper-spectral-analysis)
@@ -98,11 +98,11 @@ Negative discharges cause the surrounding tracings to point toward the electrode
 It's important to clarify that the word "positive" means different things for a deflection versus a phase reversal. 
 
 - A single deflection's polarity is straightforward by convention: down is positive, up is negative. 
-- A phase reversal's polarity names where the maximal charge sits among other channels, rather thn referring to a signel channel in isolation. So the same pair of electrodes, each carrying its own discharge can give rise to different types of phase reversals depending on how they're arranged [in a montage.]
+- A phase reversal's polarity names where the maximal charge sits among other channels, rather than referring to a signel channel in isolation. So the same pair of electrodes, each carrying its own discharge can give rise to different types of phase reversals depending on how they're arranged [in a montage.]
   - A positive phase reversal is made of a negative upward deflection and a positive downward deflection that point away from one another;
-  - a negative phase reversal is made of one downward (+) deflection and one upward (-) deflection that point toward one another.
+  - A negative phase reversal is made of one downward (+) deflection and one upward (-) deflection that point toward one another.
 
-So, calling a phase reversal "positive" or "negative" describes the electrode of maximal charge of either polarity, not the deflections that compose it. This distinction is especially importnat for the first and last electrodes in a montage chain, due to the **end of chain phenomenon.** Recall that, in a bipolar montage, two electrodes are compared to one another; however, the first electrode in a chain doesn't have a preceding electrode to be compared to, and the last electrode doesn't have one following to produce the inward inflection pattern needed to demonstrate a phase reversal. 
+So, calling a phase reversal "positive" or "negative" describes the electrode of maximal charge of either polarity, not the deflections that compose it. This distinction is especially important for the first and last electrodes in a montage chain, due to the **end of chain phenomenon.** Recall that, in a bipolar montage, two electrodes are compared to one another; however, the first electrode in a chain doesn't have a preceding electrode to be compared to, and the last electrode doesn't have one following to produce the inward inflection pattern needed to demonstrate a phase reversal. 
 
 ![end of chain montage](Spectrogram_Analysis_Images/montage_endofchain_phenomenon.png)
 
@@ -122,13 +122,13 @@ Unlike bipolar momntages, there is no phase reversal in a referential montage. E
 ![referential montage display](Spectrogram_Analysis_Images/referential_montage_eeg_display.png)
 
 ### Page speed (EEG display settings).
-Formation of the EEG tracing lines is only one part of EEG. REading speed determines how many seconds of the study are displayed at one time. The standard adult reading speed is 30mm/sec and the standard neonatal speed is 15 mm/sec. 
+Formation of the EEG tracing lines is only one part of EEG. Reading speed determines how many seconds of the study are displayed at one time. The standard adult reading speed is 30mm/sec and the standard neonatal speed is 15 mm/sec. 
 
 The higher the reading speed, the fewer seconds are displayed on the screen at one time, and the more "stretched out" the EEG waves appear. When EEG is/was recorded by ink and paper on a continuous stream of paper, page speed would dictate how stretched out the EEG waves appeared (see image below). 
 
 ![page speed](Spectrogram_Analysis_Images/page_speed_examples.png)
 
-In practical terms, syncing up the **Timescale** of both the Sleep Profiler Study Editor Tool, and the EDFBrowser (used for viewing raw EEG data), will allow you to identify what EEG.edf file channels correspond to what Sleep Profile Study Editor Tool channels. This is critical for ensuring that data channels are properly identify in  Python or whatever program you will be using to perform EEG macro- and micro-structural analysis. 30 seconds per page. 
+In practical terms, syncing up the **Timescale** of both the Sleep Profiler Study Editor Tool, and the EDFBrowser (used for viewing raw EEG data), will allow you to identify what EEG.edf file channels correspond to what Sleep Profile Study Editor Tool channels. This is critical for ensuring that data channels are properly identify in Python or whatever program you will be using to perform EEG macro- and micro-structural analysis. 30 seconds per page. 
 
 ### Filters.
 Filters are another foundational concept in EEG. Every tracing you read has already been filtered, in that the waveforms on the screen are a processed rather than pure representation of the underlying electrical activity. Filters can improve readability by attenuating distracting or irrelevant frequencies at the extremes of the spectrum. However, relevant cerebral activity can bre diminished or distorted in the process of filtering. 
@@ -141,7 +141,7 @@ Choosing LFF that is too low will allow a lot of unwanted lf sweat [sic] and oth
 
 **High frequency filters** (HFF) filter out frequencies above a certain threshold; they are also called low pass filters for similar reasons to how high pass filters earned their nickname. The standard HFF is 70 Hz, and choosing a HFF that is too low will filter out possibly important beta activity, while choosing one that is too high may lead to excessive myogenic (muscle) artifact that obscures underlying slower rhythms. 
 
- **Notch filters** selectively remove 60 Hz actiity that arises from electrical interference such as wires and equipment (50 Hz for Europe). Because 60/50 Hz sits well above the average range of cerebral activity reliably captured via scalp EEG, notching out this frequency doesn't usually affect interpretation, although it can subtly distort sharp transients. 
+ **Notch filters** selectively remove 60 Hz activity that arises from electrical interference such as wires and equipment (50 Hz for Europe). Because 60/50 Hz sits well above the average range of cerebral activity reliably captured via scalp EEG, notching out this frequency doesn't usually affect interpretation, although it can subtly distort sharp transients. 
 
  ### Sensitivity. 
  Sensitivity determines how tall waveforms appear on screen by setting the voltage needed to produce a given height. It is measured in microvolts per millimeter (μV/mm) and, somewhat counterintuitively, the higher the number the lower the sensitivity. 
@@ -154,7 +154,7 @@ Choosing LFF that is too low will allow a lot of unwanted lf sweat [sic] and oth
 **EDF Instructions:**
 1. Open the EEG.edf file in Sleep Profiler's Study Editor Tool.
 2. Open the EEG.edf file in EDFBrowser. Select/add the 4 EEG channels to the signal composition (derivation). Click 'Add Signals' for the channel display to show up. **Note:** You can only view multiple channels that are the same sample frequency (e.g., only 256 Hz or 10 Hz channels at once.)
-3. **Adjust display settings:.** Match timescale, and amplitude settings for the EDFBrowser. **Alway start matching based on the Sleep Profiler Study Editor Tool's display settings** (which are much less customizabile).
+3. **Adjust display settings.** Match timescale, and amplitude settings for the EDFBrowser. **Alway start matching based on the Sleep Profiler Study Editor Tool's display settings** (which are much less customizabile).
    - Standard EEG epochs are 30-s in length as a reference. For initial timescales, I would scan the Sleep Profiler Study Editor Tool in **30 to 120 seconds per screen display** and find a distinct set of features in the Study Editor tools (e.g., unique shape/patterns of artifact of signal in the fEMG, R/LEOG, and/or EEG channels.)
    - After finding a distinct EEG signal, adjust timescale to 30-seconds in SP study editor tool. The end results will me much more apparent in the 30-s timescale (again, the AASM EEG standard.)
    - Match EDFBrowser to the timestamp shown for the EMT timestamp in the SP Study Editor Tool. **EST** is the timestamp at the left-most end of the SP study editor tool display; **EMT** is the timestamp of your cursor. The EDFBrowser timestamp should be within ~10 seconds of the SP study editor tool's time.
@@ -162,21 +162,10 @@ Choosing LFF that is too low will allow a lot of unwanted lf sweat [sic] and oth
   - Sleep Profiler has this reversed without an option to correct. EDFBrowser channels will likely need to be inverted (access via Signals -> Properties or by clicking the display name of a channel).
   - Adjust EDFBrowser amplitude settings to match Sleep Profiler. starting around +/- 75 to 100 amplitude is a good starting place for R/LEOG and EEG channels. 
   - Match the amplitude for each channel in EDFBrowser. 
-5. 
+5. Set both timescales to same rate (I like 30s or 60s/per page).
+6. Visually inspect the waveform characteristics.
 
-
-- 
-- Set both timescales to same rate
-  - EDFBrowser(EDFB): 
-  - SleepProfiler(SP):
-- Visually inspect the waveform characteristics
-
-
-
-
-
-# Section 1- Spectrogram Analysis 101 (Overview)
-
+# Spectrogram Analysis 101 (Overview)
 Spectral estimation (SE) is a technique for analyzing any signal comprised of oscillation waves. SE quantitatively breaks down a waveform signal in terms of all the different frequencies that comprise the waveform as well as their respetive oscillatory power (amplitude).
 
 **Example:** White light is a waveform comprised of different colors (ROYGBIV) and their respective wavelengths. Sound is composed of different wavelengths at different frequencies that come together to produce the various parts of music/sound that you hear. 
@@ -185,7 +174,7 @@ Spectral estimation (SE) is a technique for analyzing any signal comprised of os
 
 Spectral estimation operates under the assumption that any oscillatory waveform signal can be broken up into the pure sine waves of different frequencies that make up that waveform.
 
-Converting a waveform from the time domain to the frequency domain and into its individual frequencies is often done using Fourier analysis (i.e., Fast Fourier Transformation (FFT)). See the section on Periodograms for more on FFT.
+Converting a waveform from the time domain to the frequency domain and into its individual frequencies is often done using Fourier analysis (i.e., Fast Fourier Transformation, FFT). See the section on Periodograms for more on FFT.
 
 Here is a diagram of a stationary signal and the individual waveforms that comprise the signal (1, 3, 8 Hz) and their depiction in the frequency domain, shown in the "Power Spectrum." (top graph). 
 
@@ -198,7 +187,6 @@ Here is a diagram of a stationary signal and the individual waveforms that compr
 In order to view the dynamic changes of waveforms, we use what is known as a **Spectrogram**, which transfers the waveform(s) into what is known as the **time-frequency domain**.
 
 ## Spectrogram
-
 In a spectrogram:
 - X-axis represents time
 - Y-axis represents frequency
@@ -220,55 +208,31 @@ Here is a snapshot of traditional, single-taper, and multi-taper spectrograms
 
 ![Different Spectrogram types](Spectrogram_Analysis_Images/Different_spectrograms.png)
 
-
-
-
-
-
 ### Sleep Staging 
-Sleep staging is a useful but has inherent limitations, including low-resolution, subjectivity (inter-/intra-technicain reliability), time-consuming, and doesn't account for the vast heterogeneity of the sleep EEG activity.
+Sleep staging is a useful but has inherent limitations, including low-resolution, subjectivity (inter-/intra-technician reliability), time-consuming, and doesn't account for the vast heterogeneity of the sleep EEG activity.
 
 For instance, the black line in the image below represents general EEG brainwave activity, with the red step-wise line representing discrete sleep stages (in 30 second epochs). While scoring sleep stages this way is useful for describing sleep states, but in reality, brain activity is constantly in a state of flux and not restricted to 30 second epochs (e.g., while asleep, you could wake up at any moment!)
 
 ![Discretizing sleep state and time](Spectrogram_Analysis_Images/discretizing_sleep_time.png)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # Wave Properties
 This is a quick section for referencing the different properties of a wavelength, which are used to characterize a waveform. 
 
 - **Frequency:** The number of oscillations of a wave per second (measured in Hz).
-- **Phase:** Represented by θ (theta) indicating the time of the wave relative to where it is along its sinusoidal cycle. Phase is measured in degrees or radians
+- **Phase:** Represented by θ (theta) indicating the time of the wave relative to where it is along its sinusoidal cycle. Phase is measured in degrees or radians.
 - **Amplitude:** The average distance between peak to troughs, measured in microvolts (μV).
-- ** Power:** The square of the amplitude. Power is often displayed on a logarithmic scale, in decibels (dB).
-
+- **Power:** The square of the amplitude. Power is often displayed on a logarithmic scale, in decibels (dB).
 
 ![Fundamental Wave Properties](Spectrogram_Analysis_Images/fundamental_wave_properties.png)
 
-
-# Section XX: Periodogram and Fourier Analysis
-This section deals with the underlying mathematics behind how to get spectral estimation of spectrum powers from EEG data. It is currently being written so this author understands WTF is actually happening with EEG and power spectral analysis via Python. This section will be more important for understanding how to adjust the parameters of power spectral estimation to verify the output is as accurate as possible.
+# Periodogram and Fourier Analysis
+This section deals with the underlying mathematics behind how to get spectral estimation of spectrum powers from EEG data. It is currently being written so this author understands WTF is actually happening with EEG and power spectral analysis, via Python. This section will be more important toward understanding how to adjust the parameters of power spectral estimation to verify the output is as accurate as possible.
 
 Here is a schematic of the Fast Fourier Transformation, indicating how EEG waveforms move from the time domain to the frequency domain. 
 
 ![Fast Fourier Transformation schematic](Spectrogram_Analysis_Images/Fast_Fourier_Transformation_schematic.png)
 
-Fourier analysis assumes that any dataset can be broken into a series of pure sinusoids of **infinite length.** In reality, we use finite data.
+Fourier analysis assumes that any dataset can be broken into a series of pure sinusoids of infinite length. In reality, we use finite data.
 
 The simplest method of power spectral estimation (albeit a poor estimator) is the use of a periodogram (see below).
 
@@ -287,7 +251,7 @@ As a result, these side lobes occur due to the sharp changes in the data during 
 ## Periodogram Bias
 Since a perfect spectrum data point is not achievable (as we live in the real world with finite data), every power spectrum estimator technique has **bias**, meaning the output will differ from the ideal/expected spectrum. This bias is particularly poor when data length is short.
 
-**Note:** Due to this bias, fine-tuning the power spectrum estimation methods (i.e., Python code arguments and "clean-er" data) will help minimize the bias/estimation error.
+**Note:** Due to this bias, fine-tuning the power spectrum estimation methods (i.e., Python code arguments and "cleaner" data) will help minimize the bias/estimation error.
 
 There two types of bias that occur: narrowband bias (main lobe), and 
 
@@ -314,7 +278,7 @@ There are multiple types of taper functions. The one shown in this picture is kn
 
 ![Taper Function example](Spectrogram_Analysis_Images/Periodogram_Hamming_taper_function.png)
 
-This taper function pushes down on the sidelobe, thereby reducing the, albeit at the trade-off of increasing the narroband bias. (There are apparently ways of understanding and controlling for how wide the main lobe will be, if you understand your frequency resolution and choose parameters wisely.)
+This taper function pushes down on the side lobe, thereby reducing the, albeit at the trade-off of increasing the narroband bias. (There are apparently ways of understanding and controlling for how wide the main lobe will be, if you understand your frequency resolution and choose parameters wisely.)
 
 ![single taper spectrum periodogram](Spectrogram_Analysis_Images/periodogram_single_taper_spectrum.png)
 
@@ -336,7 +300,7 @@ As previously mentioned, there are taper methods that can be used to smooth spec
 ![multitaper DPSS](Spectrogram_Analysis_Images/multitaper_DPSS.png)
 
 1. The shapes of these tapers were developed to remove false power from the sidelobes, reducing broadband bias.
-2. These tapers are orthogonal to one another so that they're uncorrelated estimated projections of the data (spectral power) than then be averaged together to reduce variance.
+2. These tapers are orthogonal to one another so that they're uncorrelated estimated projections of the data (spectral power), then these projections be averaged together to reduce variance.
 
 Here is what the steps of multitaper spectrum analysis look like all together:
 
@@ -416,12 +380,9 @@ import mne
 import yasa
 ```
 
-
 # Importing Data
 ### EEG.edf file
 Sleep Profiler (edf) study file
-
-
 
 ### Hypnogram 
 Sleep Profiler (csv) study file
