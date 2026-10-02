@@ -512,6 +512,16 @@ A multi-scale visualizatin of the frontal EEG spectrogram shows spindles centere
 
 
 
+
+
+
+
+
+
+
+
+
+
 ## Sleep Spindle Analysis
 
 YASA.spindles_detect [documentation](https://yasa-sleep.org/generated/yasa.spindles_detect.html#yasa.spindles_detect)
